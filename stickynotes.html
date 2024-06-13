@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Project</title>
+</head>
+<body>
+    <form id="form" style="margin-bottom: 20px;">
+        <input type="text" id="title" placeholder="Title" style="width: 100%; margin-bottom: 10px;">
+        <textarea id="description" placeholder="Description" style="width: 100%; margin-bottom: 10px;"></textarea>
+        <button type="button" onclick="createNote()" style="width: 100%;">Save Note</button>
+    </form>
+
+    <div id="output"></div>
+
+    <script>
+        renderNotes();
+
+        function createNote() {
+            const title = document.getElementById('title').value;
+            const description = document.getElementById('description').value;
+
+            const note = {
+                title: title,
+                description: description,
+                created: new Date(),
+                pinned: false
+            };
+
+            let notes = [];
+
+            if (localStorage.getItem('notes')) {
+                notes = JSON.parse(localStorage.getItem('notes'));
+            }
+
+            notes.push(note);
+
+            localStorage.setItem('notes', JSON.stringify(notes));
+
+            renderNotes();
+
+            document.getElementById('form').reset();
+        }
+
+        function renderNotes() {
+            const notes = JSON.parse(localStorage.getItem('notes')) || [];
+
+            notes.sort((a, b) => b.pinned - a.pinned);
+
+            let output = '';
+
+            notes.forEach((note, index) => {
+                output += `
+                    <div style="border: 1px solid #000; padding: 10px; margin-bottom: 10px;">
+                        <h3>${note.title}</h3>
+                        <p>${note.description}</p>
+                        <p>${note.created}</p>
+                        <button onclick="editNote(${index})">Edit</button>
+                        <button onclick="deleteNote(${index})">Delete</button>
+                        <button onclick="togglePin(${index})">${note.pinned ? 'Unpin' : 'Pin'}</button>
+                    </div>
+                `;
+            });
+
+            document.getElementById('output').innerHTML = output;
+        }
+
+        function editNote (index) {
+            const notes = JSON.parse(localStorage.getItem('notes'));
+
+            const note = notes[index];
+
+            document.getElementById('title').value = note.title;
+            document.getElementById('description').value = note.description;
+
+            notes.splice(index, 1);
+
+            localStorage.setItem('notes', JSON.stringify(notes));
+
+            renderNotes();
+        }
+
+        function deleteNote (index) {
+            const notes = JSON.parse(localStorage.getItem('notes'));
+
+            notes.splice(index, 1);
+
+            localStorage.setItem('notes', JSON.stringify(notes));
+
+            renderNotes();
+        }
+
+        function togglePin (index) {
+            const notes = JSON.parse(localStorage.getItem('notes'));
+
+            notes[index].pinned = !notes[index].pinned;
+
+            localStorage.setItem('notes', JSON.stringify(notes));
+
+            renderNotes();
+        }
+    </script>
+</body>
+</html>
