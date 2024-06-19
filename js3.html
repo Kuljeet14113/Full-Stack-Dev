@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        .id2{
+            /* display:grid;
+            grid-template-columns: 1fr;
+            grid-template-rows: 1fr; */
+            width:200px;
+            height: 200px;
+            background-color: aqua;
+            border: black;
+        }
+    </style>
+</head>
+<body>
+    <button type="button" id="btn1" click here ></button>
+    <div id="id1" ></div>
+    <div id="id2"></div>
+    <script>
+        document.writeln('this is document.write')
+        let elem=document.getElementById("id1")
+        let button = document.getElementById("btn1")
+        elem.style.color="red"
+        
+        function addItem(){
+            elem.innerHTML +="<h5>this is the h1</h5><br>"
+
+
+        }
+        button.addEventListener("mouseleave",addItem)
+
+    </script>
+</body>
+</html>
