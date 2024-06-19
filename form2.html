@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>form</title>
+</head>
+<body>
+    <h1>Input Form</h1>
+    <form id="dataForm">
+        <label for="name">Name:</label><br>
+        <input type="text" id="name" name="name" required><br><br>
+        
+        <label for="phone">Phone Number:</label><br>
+        <input type="tel" id="phone" name="phone" required><br><br>
+        
+        <label for="email">Email:</label><br>
+        <input type="email" id="email" name="email" required><br><br>
+        
+        <input type="submit" value="Submit">
+    </form>
+    
+    <h2>Entered Data:</h2>
+    <div id="displayData"></div>
+
+    <script>
+        document.getElementById('dataForm').addEventListener('submit', function(event) {
+            event.preventDefault(); 
+         
+            var name = document.getElementById('name').value;
+            var phone = document.getElementById('phone').value;
+            var email = document.getElementById('email').value;
+            
+            // Display data
+            var displayDiv = document.getElementById('displayData');
+            displayDiv.innerHTML = '<p>Name: ' + name + '</p>' +
+                                   '<p>Phone Number: ' + phone + '</p>' +
+                                   '<p>Email: ' + email + '</p>';
+        });
+    </script>
+</body>
+</html>
+
+
